@@ -1,9 +1,11 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-undef */
 /* eslint-disable no-restricted-globals */
 import React from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router';
+import io from 'socket.io-client';
 
 class Login extends React.Component {
   constructor(props) {
@@ -15,6 +17,8 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    // this http should be dynamic
+    this.socket = io('localhost:8080');
   }
 
   handleChange() {
