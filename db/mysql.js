@@ -44,8 +44,17 @@ const createUser = (obj, cb) => {
     }
   });
 };
-
+const getAllSongs = (cb) => {
+  db.collection('videos').find().toArray((err, data) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(data);
+    return cb(data);
+  });
+};
 module.exports = {
   checkPassword,
   createUser,
+  getAllSongs,
 };
