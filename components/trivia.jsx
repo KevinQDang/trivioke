@@ -3,6 +3,8 @@
 /* eslint-disable no-param-reassign */
 import React, { Component } from 'react';
 
+// wait for 3 players
+
 class Trivia extends Component {
   constructor(props) {
     super(props);
