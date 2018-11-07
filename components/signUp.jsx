@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-undef */
 /* eslint-disable no-restricted-globals */
@@ -42,9 +43,9 @@ class SignUp extends React.Component {
         >
           <div>
             <p><strong>Sign Up</strong></p>
-            Username:
+              Username:
             <input type="text" name="name" onChange={this.handleChange} />
-            Password:
+              Password:
             <input type="text" name="pw" autoComplete="off" onChange={this.handleChange} />
             <input type="submit" value="Submit" onClick={this.handleSubmit} />
           </div>

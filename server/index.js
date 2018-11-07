@@ -1,9 +1,10 @@
-/* eslint-disable no-console */
+/* eslint-disable linebreak-style */
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
+const socket = require('socket.io');
 const db = require('../db/mysql.js');
 const util = require('./helpers.js');
 
@@ -45,6 +46,16 @@ app.get('/login', (req, res) => {
 });
 
 const port = 8080;
-app.listen(process.env.PORT || port, () => {
+
+const server = app.listen(process.env.PORT || port, () => {
   console.log(`listening on port ${process.env.PORT || port}`);
+});
+
+const io = socket(server);
+// has rooms property
+
+io.on('connection', (socket) => {
+  // condition for which user is emitting data
+  socket.name = 'connie';
+  console.log(socket.id, socket.name);
 });
