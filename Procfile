@@ -1,1 +1,1 @@
-<process type>: <command>
+<process type>: web: bundle exec rails server -p $PORT
