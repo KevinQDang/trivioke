@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-class Lifelines extends React.Component {
+class Traps extends React.Component {
+  // props needs functions for 3 traps!!
   constructor(props) {
     super(props);
     this.state = {
@@ -9,19 +10,19 @@ class Lifelines extends React.Component {
   }
 
   render() {
-    const { handleClick, triviaRequest, changeCat } = this.props;
+    const { trap1Func, trap2Func, trap3Func } = this.props;
     return (
       <div>
-        <h4>Lifelines</h4>
+        <h4>Traps!</h4>
         <table style={{
           width: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center',
         }}
         >
           <thead>
             <tr style={{ border: 'none' }}>
-              <td><button type="button" onClick={handleClick}>50/50</button></td>
-              <td><button type="button" onClick={triviaRequest}>Change Question</button></td>
-              <td><button type="button" onClick={changeCat}>Change Category</button></td>
+              <td><button type="button" onClick={trap1Func}>Trap1</button></td>
+              <td><button type="button" onClick={trap2Func}>Trap2</button></td>
+              <td><button type="button" onClick={trap3Func}>Trap3</button></td>
             </tr>
           </thead>
         </table>
@@ -29,4 +30,4 @@ class Lifelines extends React.Component {
     );
   }
 }
-export default Lifelines;
+export default Traps;
