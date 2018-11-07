@@ -24,7 +24,7 @@ const checkPassword = (dataObj, cb) => {
   const { username } = dataObj;
   User.findOne({ username }, (err, data) => {
     if (err) {
-      console.log(err);
+      console.log(err, 'data');
       cb(err, null);
     } else {
       cb(null, data);

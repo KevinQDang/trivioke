@@ -10,13 +10,16 @@ const createSession = (req, res, user) => {
 };
 
 const createUser = (req, res, salt) => {
-  bcrypt.hash(req.query.password, salt, (err, hash) => {
+  bcrypt.hash(req.query.pw, salt, (err, hash) => {
     if (err || !hash) {
       res.send('create user error', err);
     } else {
-      db.createUser({username: req.query, password: hash }, (error) => {
+      db.createUser({username: req.query.name, password: hash }, (error) => {
         if (error) {
           res.send(error);
+        } else {
+          createSession(req, res, req.query.name);
+          res.end();
         }
       });
     }
@@ -45,18 +48,18 @@ const createUser = (req, res, salt) => {
 //   });
 // };
 const checkPassword = (req, res) => {
-  const { username, password } = req.query;
-  db.checkPassword({ username }, (err, result) => {
+  const { name, pw } = req.query;
+  db.checkPassword({ username: name }, (err, result) => {
     if (err) {
       res.send(err);
     } else {
-      bcrypt.compare(password, result[0].password, (error, data) => {
+      bcrypt.compare(pw, (error, data) => {
         if (data === true) {
           console.log('user is good');
-          createSession(req, res, username);
-          res.send(200);
+          createSession(req, res, name);
+          res.sendStatus(200);
         } else {
-          res.send(404);
+          res.sendStatus(404);
         }
       })
     }

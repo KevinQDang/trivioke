@@ -29,7 +29,7 @@ class Login extends React.Component {
 
   handleSubmit() {
     const loginInfo = this.state;
-    axios({ method: 'get', url: 'http://localhost:8080/login', params: loginInfo })
+    axios({ method: 'get', url: 'http://localhost:8080', params: loginInfo })
       .then(() => {
         this.setState({ redirect: true });
       })
