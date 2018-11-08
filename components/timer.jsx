@@ -7,7 +7,6 @@ class Timer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: 30,
     };
     this.startTimer = (time, display) => {
       const timer = setInterval(() => {
@@ -24,7 +23,7 @@ class Timer extends Component {
 
   componentDidMount() {
     const display = this.refs.time;
-    this.startTimer(this.state.time, display);
+    this.startTimer(this.props.time, display);
   }
 
   render() {

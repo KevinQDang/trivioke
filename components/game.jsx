@@ -6,6 +6,7 @@ import React from 'react';
 import Lifelines from './lifelines.jsx';
 import Trivia from './trivia.jsx';
 import Timer from './timer.jsx';
+import Traps from './traps.jsx';
 import Scoreboard from './scoreBoard.jsx';
 import VideoPlayer from './player.jsx';
 
@@ -13,6 +14,10 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // traps must update state!
+      time: 30,
+      reverse: false,
+      doubleAnswers: false,
       video: false,
       visibility: true,
       question: null,
@@ -82,9 +87,14 @@ class Game extends React.Component {
     this.setState({ visibility: !visibility });
   }
 
+  halfTime() {
+
+  }
+
   render() {
+    // conditional render for only player whos current turn can see answers!
     const {
-      question, visibility, currTeam, team1, team2, video,
+      question, visibility, currTeam, team1, team2, video, time, reverse, doubleAnswers,
     } = this.state;
     const { name1, name2 } = this.props;
     if (!video) {
@@ -97,9 +107,10 @@ class Game extends React.Component {
               handleClick={this.handleClick}
               changeCat={this.changeCat}
             />
+            <Traps />
             <Timer
               trigger={this.triggerVideo}
-              // time state?
+              time={time}
             />
             <Trivia
               triviaRequest={this.triviaRequest}
@@ -109,6 +120,8 @@ class Game extends React.Component {
               nextTeam={this.nextTeam}
               increaseScore={this.increaseScore}
               trigger={this.triggerVideo}
+              reverse={reverse}
+              doubleAnswers={doubleAnswers}
             />
             <Scoreboard
               currTeam={currTeam}
