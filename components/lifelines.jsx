@@ -47,9 +47,9 @@ class Lifelines extends React.Component {
         >
           <thead>
             <tr style={{ border: 'none' }}>
-              <td><button type="button" style={hide} onClick={() => { handleClick(); this.toggle(); }}>50/50</button></td>
-              <td><button type="button" style={hide1} onClick={() => { triviaRequest(); this.toggle1(); }}>Change Question</button></td>
-              <td><button type="button" style={hide2} onClick={() => { changeCat(); this.toggle2(); }}>Change Category</button></td>
+              <td><button type="button" style={hide} onClick={() => { handleClick('used'); this.toggle(); }}>50/50</button></td>
+              <td><button type="button" style={hide1} onClick={() => { triviaRequest('used'); this.toggle1(); }}>Change Question</button></td>
+              <td><button type="button" style={hide2} onClick={() => { changeCat('used'); this.toggle2(); }}>Change Category</button></td>
             </tr>
           </thead>
         </table>
