@@ -15,7 +15,7 @@ class Game extends React.Component {
     super(props);
     this.state = {
       // traps must update state!
-      time: 30,
+      time: 60,
       reverse: false,
       video: false,
       visibility: true,
@@ -35,6 +35,7 @@ class Game extends React.Component {
     this.halfTime = this.halfTime.bind(this);
     this.changeDifficulty = this.changeDifficulty.bind(this);
     this.reverseAnswers = this.reverseAnswers.bind(this);
+    this.startTimer = this.startTimer.bind(this);
   }
 
 
@@ -140,6 +141,17 @@ class Game extends React.Component {
     }
   }
 
+  startTimer() {
+    this.timer = setInterval(() => {
+      const { time } = this.state;
+      this.setState({ time: time - 1 });
+      if (time - 1 < 0) {
+        clearInterval(this.timer);
+        this.triggerVideo();
+      }
+    }, 1000);
+  }
+
   componentDidMount() {
     this.triviaRequest();
   }
@@ -153,6 +165,8 @@ class Game extends React.Component {
     const { time } = this.state;
     const newTime = time / 2;
     this.setState({ time: newTime });
+
+    console.log(time, newTime, this.state.time);
   }
 
   reverseAnswers() {
@@ -174,7 +188,7 @@ class Game extends React.Component {
   render() {
     // conditional render for only player whos current turn can see answers!
     const {
-      question, visibility, currTeam, team1, team2, team3, video, answers, time,
+      question, currTeam, team1, team2, team3, video, answers, time,
     } = this.state;
     const { name1, name2, name3 } = this.props;
     if (!video) {
@@ -194,7 +208,7 @@ class Game extends React.Component {
             />
             <Timer
               startTimer={this.startTimer}
-              trigger={this.triggerVideo}
+              timer={this.timer}
               time={time}
             />
             <Trivia
@@ -204,7 +218,6 @@ class Game extends React.Component {
               handleChange={this.handleChange}
               question={question}
               answers={answers}
-              hidden={visibility}
               nextTeam={this.nextTeam}
               increaseScore={this.increaseScore}
               trigger={this.triggerVideo}
