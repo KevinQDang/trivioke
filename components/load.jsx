@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import Filters from './filters.jsx';
 import Team from './teamTable.jsx';
 import Game from './game.jsx';
+// add timer component
 
 class Load extends Component {
   constructor(props) {

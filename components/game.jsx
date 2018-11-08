@@ -5,6 +5,7 @@
 import React from 'react';
 import Lifelines from './lifelines.jsx';
 import Trivia from './trivia.jsx';
+import Timer from './timer.jsx';
 import Scoreboard from './scoreBoard.jsx';
 import VideoPlayer from './player.jsx';
 
@@ -95,6 +96,10 @@ class Game extends React.Component {
               triviaRequest={this.triviaRequest}
               handleClick={this.handleClick}
               changeCat={this.changeCat}
+            />
+            <Timer
+              trigger={this.triggerVideo}
+              // time state?
             />
             <Trivia
               triviaRequest={this.triviaRequest}

@@ -14,7 +14,7 @@ const createUser = (req, res, salt) => {
     if (err || !hash) {
       res.send('create user error', err);
     } else {
-      db.createUser({username: req.query.name, password: hash }, (error) => {
+      db.createUser({ username: req.query.name, password: hash }, (error) => {
         if (error) {
           res.send(error);
         } else {
@@ -23,7 +23,7 @@ const createUser = (req, res, salt) => {
         }
       });
     }
-  })
+  });
 };
 
 // const createPassword = (req, res, salt) => {
