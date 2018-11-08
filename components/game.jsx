@@ -14,6 +14,7 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // showResults: false,
       video: false,
       visibility: true,
       question: null,
@@ -24,7 +25,7 @@ class Game extends React.Component {
     this.increaseScore = this.increaseScore.bind(this);
     this.triggerVideo = this.triggerVideo.bind(this);
     this.changeCat = this.changeCat.bind(this);
-    this.currTeam = 'Team 1';
+    // this.toggle = this.toggle.bind(this);
   }
 
   triviaRequest() {
@@ -81,11 +82,16 @@ class Game extends React.Component {
     this.setState({ visibility: !visibility });
   }
 
+  // toggle() {
+  //   this.setState({ showResults: true });
+  // }
+
   render() {
     const {
       question, visibility, currTeam, team1, team2, video,
     } = this.state;
     const { name1, name2 } = this.props;
+    // const style = this.state.showResults ? { display: 'none' } : {};
     if (!video) {
       return (
         <center>

@@ -9,6 +9,7 @@ const session = require('express-session');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const util = require('./helpers.js');
+const video = require('../videos').data;
 
 
 const saltRounds = 10;
@@ -58,6 +59,7 @@ io.on('connection', (socket) => {
     const clientsInRoom = io.nsps['/'].adapter.rooms[room];
     const numClients = clientsInRoom === undefined ? 0 : Object.keys(clientsInRoom.sockets).length;
 
+<<<<<<< HEAD
 // max threey clients
 if (numClients > 3) {
   socket.emit('full', room);
@@ -67,8 +69,18 @@ if (numClients > 3) {
   socket.id = socket.adapter.rooms[room].length
     console.log("this socket is player", socket.id);
 }
+=======
+    // max threey clients
+    if (numClients > 3) {
+      socket.emit('full', room);
+    } else {
+      socket.join(room);
+      console.log('user joined', room);
+      socket.id = socket.adapter.rooms[room].length;
+      console.log('this socket is player', socket.id);
+    }
+>>>>>>> 4c96369cf785638f6c642214c57e1809aa204476
   });
- 
 });
 
 http.listen(8080, () => {
