@@ -8,6 +8,14 @@ class Lifelines extends React.Component {
     };
   }
 
+  // getInitialState() {
+  //   return { showResults: false };
+  // }
+
+  // onClick() {
+  //   this.setState({ showResults: true });
+  // }
+
   render() {
     const { handleClick, triviaRequest, changeCat } = this.props;
     return (
