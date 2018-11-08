@@ -44,8 +44,35 @@ const createUser = (obj, cb) => {
     }
   });
 };
+const videosSchema = mongoose.Schema({
+    
+  _id: {
+    kind: String,
+    videoId: String,
+  },
+  snippet: {
+    title: String,
+    description: String,
+    thumbnails: {
+      default: {
+        url: String,
+      },
+    },
+  },
+});
+const Video = mongoose.model('Video', videosSchema);
+const getAllSongs = (cb) => {
+  Video.find((err, res) => {
+    if (err) {
+      console.log(err);
+      return cb(err, null);
+    }
+    return cb(null, [res]);
+  });
+};
 
 module.exports = {
   checkPassword,
   createUser,
+  getAllSongs,
 };
