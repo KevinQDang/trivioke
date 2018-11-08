@@ -3,6 +3,7 @@
 /* eslint-disable import/extensions */
 /* eslint-disable react/sort-comp */
 import React from 'react';
+
 import Lifelines from './lifelines.jsx';
 import Trivia from './trivia.jsx';
 import Timer from './timer.jsx';
@@ -16,9 +17,6 @@ class Game extends React.Component {
       video: false,
       visibility: true,
       question: null,
-      currTeam: 'team1',
-      team1: 0,
-      team2: 0,
     };
     this.triviaRequest = this.triviaRequest.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -26,6 +24,7 @@ class Game extends React.Component {
     this.increaseScore = this.increaseScore.bind(this);
     this.triggerVideo = this.triggerVideo.bind(this);
     this.changeCat = this.changeCat.bind(this);
+    this.currTeam = 'Team 1';
   }
 
   triviaRequest() {
@@ -51,7 +50,7 @@ class Game extends React.Component {
 
   nextTeam() {
     const { currTeam } = this.state;
-    return currTeam === 'team1' ? this.setState({ currTeam: 'team2' }) : this.setState({ currTeam: 'team1' });
+    return currTeam === 'Team 1' ? this.setState({ currTeam: 'Team 2' }) : this.setState({ currTeam: ' team 1' });
   }
 
   triggerVideo() {
@@ -60,7 +59,7 @@ class Game extends React.Component {
 
   increaseScore() {
     const { currTeam } = this.state;
-    if (currTeam === 'team1') {
+    if (currTeam === 'Team 1') {
       sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
       this.setState(() => ({
         visibility: true,
