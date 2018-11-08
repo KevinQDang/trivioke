@@ -17,7 +17,7 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this http should be dynamic
+    this.room = 'game';
     this.socket = io('localhost:8080');
   }
 
@@ -28,6 +28,9 @@ class Login extends React.Component {
   }
 
   handleSubmit() {
+    this.socket.emit('login', 'A user logged in');
+    this.socket.emit('room', this.room);
+    console.log('submit')
     const loginInfo = this.state;
     axios({ method: 'get', url: 'http://localhost:8080', params: loginInfo })
       .then(() => {
