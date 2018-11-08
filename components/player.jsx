@@ -42,6 +42,7 @@ class VideoPlayer extends React.Component {
 
   render() {
     const { video } = this.state;
+    const { loser } = this.props;
     return (
       <center>
         <div>
@@ -63,6 +64,8 @@ class VideoPlayer extends React.Component {
           >
             <Link to="/game">Back</Link>
           </button>
+          <br></br>
+          <b>{loser + 'you got to sing for us'}</b>
           <Iframe
             fluid="true"
             className="embed-responsive-item"

@@ -13,7 +13,9 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // showResults: false,
+      handleClickUsed: false,
+      triviaRequestUsed: false,
+      changeCatUsed: false,
       video: false,
       visibility: true,
       question: null,
@@ -30,7 +32,13 @@ class Game extends React.Component {
     // this.toggle = this.toggle.bind(this);
   }
 
-  triviaRequest() {
+  triviaRequest(used) {
+    console.log(used, 'in triviaRequest');
+    if (used) {
+      this.setState({
+        triviaRequestUsed: true,
+      });
+    }
     const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
     fetch(url)
       .then(res => res.json())
@@ -38,14 +46,20 @@ class Game extends React.Component {
       .catch((err) => { console.error(err); });
   }
 
-  changeCat() {
+  changeCat(used) {
+    console.log(used, 'in changeCat');
+    if (used) {
+      this.setState({
+        changeCatUsed: true,
+      });
+    }
     const cats = [9, 11, 14, 15, 17, 22, 23, 26, 27];
     const rand = cats[Math.floor(Math.random() * cats.length)];
     const url = `https://opentdb.com/api.php?amount=1&category=${rand}&difficulty=${sessionStorage.diff}&type=multiple`;
     fetch(url)
       .then(res => res.json())
       .then((data) => {
-        this.setState({ question: data.results[0] });
+        this.setState({ question: data.results[rand] });
         sessionStorage.setItem('category', rand);
       })
       .catch((err) => { console.error(err); });
@@ -79,7 +93,13 @@ class Game extends React.Component {
     this.triviaRequest();
   }
 
-  handleClick() {
+  handleClick(used) {
+    console.log(used, 'in the parent handleClick');
+    if (used) {
+      this.setState({
+        handleClick: true,
+      });
+    }
     const { visibility } = this.state;
     this.setState({ visibility: !visibility });
   }
@@ -93,17 +113,28 @@ class Game extends React.Component {
       question, visibility, currTeam, team1, team2, video,
     } = this.state;
     const { name1, name2 } = this.props;
-    // const style = this.state.showResults ? { display: 'none' } : {};
+    const player1 = this.state.currTeam === 'team1' ? { display: 'none' } : {};
+    const player2 = this.state.currTeam === 'team2' ? { display: 'none' } : {};
     if (!video) {
       return (
         <center>
           <div>
-            <Lifelines
-              handleChange={this.handleChange}
-              triviaRequest={this.triviaRequest}
-              handleClick={this.handleClick}
-              changeCat={this.changeCat}
-            />
+            <div style={player1} onChange={this.nextTeam}>
+              <Lifelines
+                handleChange={this.handleChange}
+                triviaRequest={this.triviaRequest}
+                handleClick={this.handleClick}
+                changeCat={this.changeCat}
+              />
+            </div>
+            <div style={player2} onChange={this.nextTeam}>
+              <Lifelines
+                handleChange={this.handleChange}
+                triviaRequest={this.triviaRequest}
+                handleClick={this.handleClick}
+                changeCat={this.changeCat}
+              />
+            </div>
             <Timer
               trigger={this.triggerVideo}
               // time state?
@@ -129,7 +160,7 @@ class Game extends React.Component {
       );
     }
     return (
-      <VideoPlayer />
+      <VideoPlayer loser={currTeam} />
     );
   }
 }
