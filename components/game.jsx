@@ -31,6 +31,7 @@ class Game extends React.Component {
     this.increaseScore = this.increaseScore.bind(this);
     this.triggerVideo = this.triggerVideo.bind(this);
     this.changeCat = this.changeCat.bind(this);
+    this.halfTime = this.halfTime.bind(this);
   }
 
   triviaRequest() {
@@ -88,7 +89,16 @@ class Game extends React.Component {
   }
 
   halfTime() {
+    const { time } = this.state;
+    const newTime = time / 2;
+    this.setState({ time: newTime });
+    // resets state but doesn't rerender timer component
+    console.log(time, newTime, this.state.time);
+  }
 
+  reverseTrivia() {
+    const { reverse } = this.state;
+    this.setState({ reverse: !reverse });
   }
 
   render() {
@@ -107,7 +117,10 @@ class Game extends React.Component {
               handleClick={this.handleClick}
               changeCat={this.changeCat}
             />
-            <Traps />
+            <Traps
+              halfTime={this.halfTime}
+              reverseTrivia={this.reverseTrivia}
+            />
             <Timer
               trigger={this.triggerVideo}
               time={time}
