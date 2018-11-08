@@ -1,9 +1,11 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-undef */
 /* eslint-disable no-restricted-globals */
 import React from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router';
+import io from 'socket.io-client';
 
 class Login extends React.Component {
   constructor(props) {
@@ -15,6 +17,8 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.room = 'game';
+    this.socket = io('localhost:8080');
   }
 
   handleChange() {
@@ -24,8 +28,11 @@ class Login extends React.Component {
   }
 
   handleSubmit() {
+    this.socket.emit('login', 'A user logged in');
+    this.socket.emit('room', this.room);
+    console.log('submit')
     const loginInfo = this.state;
-    axios({ method: 'get', url: 'http://localhost:8080/login', params: loginInfo })
+    axios({ method: 'get', url: 'http://localhost:8080', params: loginInfo })
       .then(() => {
         this.setState({ redirect: true });
       })
