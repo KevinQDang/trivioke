@@ -16,6 +16,7 @@ class Load extends Component {
       trivia: false,
       team1: '',
       team2: '',
+      team3: '',
     };
     this.begin = this.begin.bind(this);
     this.handeleClick = this.handeleClick.bind(this);
@@ -24,14 +25,16 @@ class Load extends Component {
 
   begin() {
     const {
-      diff, category, team1, team2,
+      diff, category, team1, team2, team3,
     } = this.state;
     sessionStorage.setItem('diff', diff);
     sessionStorage.setItem('category', category);
     sessionStorage.setItem('team1', team1);
     sessionStorage.setItem('team2', team2);
+    sessionStorage.setItem('team3', team3);
     sessionStorage.setItem('score1', 0);
     sessionStorage.setItem('score2', 0);
+    sessionStorage.setItem('score3', 0);
     this.setState({ trivia: true });
   }
 
@@ -49,7 +52,7 @@ class Load extends Component {
 
   render() {
     const {
-      category, diff, team1, team2, trivia,
+      category, diff, team1, team2, team3, trivia,
     } = this.state;
     if (!trivia) {
       return (
@@ -81,7 +84,7 @@ class Load extends Component {
     }
     return (
       <div>
-        <Game category={category} diff={diff} name1={team1} name2={team2} />
+        <Game category={category} diff={diff} name1={team1} name2={team2} name3={team3} />
       </div>
     );
   }

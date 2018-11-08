@@ -17,13 +17,13 @@ class Game extends React.Component {
       // traps must update state!
       time: 30,
       reverse: false,
-      doubleAnswers: false,
       video: false,
       visibility: true,
       question: null,
       currTeam: 'team1',
       team1: 0,
       team2: 0,
+      team3: 0,
     };
     this.triviaRequest = this.triviaRequest.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -32,6 +32,8 @@ class Game extends React.Component {
     this.triggerVideo = this.triggerVideo.bind(this);
     this.changeCat = this.changeCat.bind(this);
     this.halfTime = this.halfTime.bind(this);
+    this.changeDifficulty = this.changeDifficulty.bind(this);
+    this.reverseAnswers = this.reverseAnswers.bind(this);
   }
 
   triviaRequest() {
@@ -57,7 +59,14 @@ class Game extends React.Component {
 
   nextTeam() {
     const { currTeam } = this.state;
-    return currTeam === 'team1' ? this.setState({ currTeam: 'team2' }) : this.setState({ currTeam: 'team1' });
+    // return currTeam === 'team1' ? this.setState({ currTeam: 'team2' }) : this.setState({ currTeam: 'team1' });
+    if (currTeam === 'team1') {
+      this.setState({ currTeam: 'team2' });
+    } else if (currTeam === 'team2') {
+      this.setState({ currTeam: 'team3' });
+    } else {
+      this.setState({ currTeam: 'team1' });
+    }
   }
 
   triggerVideo() {
@@ -71,8 +80,13 @@ class Game extends React.Component {
       this.setState(() => ({
         visibility: true,
       }));
-    } else {
+    } else if (currTeam === 'team2') {
       sessionStorage.setItem('score2', (Number(sessionStorage.score2) + 1));
+      this.setState(() => ({
+        visibility: true,
+      }));
+    } else {
+      sessionStorage.setItem('score3', (Number(sessionStorage.score3) + 1));
       this.setState(() => ({
         visibility: true,
       }));
@@ -96,17 +110,28 @@ class Game extends React.Component {
     console.log(time, newTime, this.state.time);
   }
 
-  reverseTrivia() {
+  reverseAnswers() {
     const { reverse } = this.state;
     this.setState({ reverse: !reverse });
+  }
+
+  changeDifficulty() {
+    const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=hard&type=multiple`;
+    fetch(url)
+      .then(res => res.json())
+      .then((data) => {
+        this.setState({ question: data.results[0] });
+        sessionStorage.setItem('diff', 'hard');
+      })
+      .catch((err) => { console.error(err); });
   }
 
   render() {
     // conditional render for only player whos current turn can see answers!
     const {
-      question, visibility, currTeam, team1, team2, video, time, reverse, doubleAnswers,
+      question, visibility, currTeam, team1, team2, team3, video, reverse, time,
     } = this.state;
-    const { name1, name2 } = this.props;
+    const { name1, name2, name3 } = this.props;
     if (!video) {
       return (
         <center>
@@ -119,13 +144,17 @@ class Game extends React.Component {
             />
             <Traps
               halfTime={this.halfTime}
-              reverseTrivia={this.reverseTrivia}
+              reverseAnswers={this.reverseAnswers}
+              changeDifficulty={this.changeDifficulty}
             />
             <Timer
+              startTimer={this.startTimer}
               trigger={this.triggerVideo}
               time={time}
             />
             <Trivia
+            // order of answers in state of game component
+            // logic of trivia component in game
               triviaRequest={this.triviaRequest}
               handleChange={this.handleChange}
               question={question}
@@ -134,14 +163,15 @@ class Game extends React.Component {
               increaseScore={this.increaseScore}
               trigger={this.triggerVideo}
               reverse={reverse}
-              doubleAnswers={doubleAnswers}
             />
             <Scoreboard
               currTeam={currTeam}
               team1={team1}
               team2={team2}
+              team3={team3}
               name1={name1}
               name2={name2}
+              name3={name3}
             />
           </div>
         </center>

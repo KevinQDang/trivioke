@@ -12,7 +12,7 @@ class Trivia extends Component {
 
   render() {
     const {
-      question, triviaRequest, hidden, nextTeam, increaseScore, trigger, reverse, doubleAnswers,
+      question, triviaRequest, hidden, nextTeam, increaseScore, trigger, reverse,
     } = this.props;
     function escapeHtml(text) {
       return text

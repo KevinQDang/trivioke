@@ -12,7 +12,7 @@ class Traps extends React.Component {
   }
 
   render() {
-    const { halfTime, reverseTrivia, trap3Func } = this.props;
+    const { halfTime, reverseAnswers, changeDifficulty } = this.props;
     return (
       <div>
         <h4>Traps!</h4>
@@ -23,8 +23,8 @@ class Traps extends React.Component {
           <thead>
             <tr style={{ border: 'none' }}>
               <td><button type="button" onClick={halfTime}> Half-time! </button></td>
-              <td><button type="button" onClick={reverseTrivia}> Reverse-Trivia </button></td>
-              <td><button type="button" onClick={trap3Func}> Trap3 </button></td>
+              <td><button type="button" onClick={reverseAnswers}> Reverse Answers! </button></td>
+              <td><button type="button" onClick={changeDifficulty}> Increase Difficulty! </button></td>
             </tr>
           </thead>
         </table>
