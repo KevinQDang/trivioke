@@ -16,7 +16,6 @@ const saltRounds = 10;
 
 app.use(cors());
 app.use(bodyParser.json());
-console.log(video);
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use(express.static(path.join(__dirname, '../images')));
 app.use(bodyParser.urlencoded({ extended: true }));

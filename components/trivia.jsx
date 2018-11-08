@@ -3,8 +3,6 @@
 /* eslint-disable no-param-reassign */
 import React, { Component } from 'react';
 
-// wait for 3 players
-
 class Trivia extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +12,7 @@ class Trivia extends Component {
 
   render() {
     const {
-      question, triviaRequest, hidden, nextTeam, increaseScore, trigger,
+      question, triviaRequest, hidden, nextTeam, increaseScore, trigger, reverse,
     } = this.props;
     function escapeHtml(text) {
       return text
@@ -28,20 +26,37 @@ class Trivia extends Component {
         .replace(/&lsquo;/g, "'")
         .replace(/&rsquo;/g, "'");
     }
-    function shuffle(answerArr) {
+    const shuffle = (answerArr) => {
       for (let i = answerArr.length - 1; i > 0; i -= 1) {
         const j = Math.floor(Math.random() * (i + 1));
         [answerArr[i], answerArr[j]] = [answerArr[j], answerArr[i]];
       }
       return answerArr;
-    }
+    };
+    const reverseStr = (str) => {
+      let reversed = '';
+      for (let i = str.length - 1; i >= 0; i--) {
+        reversed += str[i];
+      }
+      return reversed;
+    };
     if (question) {
-      const answers = [
-        <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); }}>{escapeHtml(question.correct_answer)}</button>,
-        <button key="i1" onClick={trigger} style={{ display: hidden ? 'block' : 'none' }} type="button">{escapeHtml(question.incorrect_answers[0])}</button>,
-        <button key="i2" onClick={trigger} style={{ display: hidden ? 'block' : 'none' }} type="button">{escapeHtml(question.incorrect_answers[1])}</button>,
-        <button key="i3" onClick={trigger} type="button">{escapeHtml(question.incorrect_answers[2])}</button>,
-      ];
+      let answers;
+      if (reverse) {
+        answers = [
+          <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); }}>{escapeHtml(reverseStr(question.correct_answer))}</button>,
+          <button key="i1" onClick={trigger} style={{ display: hidden ? 'block' : 'none' }} type="button">{escapeHtml(reverseStr(question.incorrect_answers[0]))}</button>,
+          <button key="i2" onClick={trigger} style={{ display: hidden ? 'block' : 'none' }} type="button">{escapeHtml(reverseStr(question.incorrect_answers[1]))}</button>,
+          <button key="i3" onClick={trigger} type="button">{escapeHtml(reverseStr(question.incorrect_answers[2]))}</button>,
+        ];
+      } else {
+        answers = [
+          <button key="c" type="button" onClick={() => { triviaRequest(); nextTeam(); increaseScore(); }}>{escapeHtml(question.correct_answer)}</button>,
+          <button key="i1" onClick={trigger} style={{ display: hidden ? 'block' : 'none' }} type="button">{escapeHtml(question.incorrect_answers[0])}</button>,
+          <button key="i2" onClick={trigger} style={{ display: hidden ? 'block' : 'none' }} type="button">{escapeHtml(question.incorrect_answers[1])}</button>,
+          <button key="i3" onClick={trigger} type="button">{escapeHtml(question.incorrect_answers[2])}</button>,
+        ];
+      }
       const shuffleArr = shuffle(answers);
       const multiChoice = [
         <div key="trivia">

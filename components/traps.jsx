@@ -3,6 +3,8 @@ import React from 'react';
 
 class Traps extends React.Component {
   // props needs functions for 3 traps!!
+  // or just 3 new functions
+  // traps must update state of game component
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +33,7 @@ class Traps extends React.Component {
   }
 
   render() {
-    const { trap1Func, trap2Func, trap3Func } = this.props;
+    const { halfTime, reverseAnswers, changeDifficulty } = this.props;
     const { hideTrap, hideTrap1, hideTrap2 } = this.state;
     const used = hideTrap ? { display: 'none' } : {};
     const used1 = hideTrap1 ? { display: 'none' } : {};
@@ -45,9 +47,9 @@ class Traps extends React.Component {
         >
           <thead>
             <tr style={{ border: 'none' }}>
-              <td><button type="button" style={used} onClick={() => { trap1Func(); this.toggle() }}>Trap1</button></td>
-              <td><button type="button" style={used1} onClick={() => { trap2Func(); this.toggle1() }}>Trap2</button></td>
-              <td><button type="button" style={used2} onClick={() => { trap3Func(); this.toggle2() }}>Trap3</button></td>
+              <td><button type="button" style={used} onClick={() => { halfTime(); this.toggle(); }}> Half-time! </button></td>
+              <td><button type="button" style={used1} onClick={() => { reverseAnswers(); this.toggle1(); }}> Reverse Answers! </button></td>
+              <td><button type="button" style={used2} onClick={() => { changeDifficulty(); this.toggle2(); }}> Increase Difficulty! </button></td>
             </tr>
           </thead>
         </table>
