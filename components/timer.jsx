@@ -10,10 +10,10 @@ class Timer extends Component {
       time: this.props.time,
     };
     this.startTimer = (time) => {
-      const timer = setInterval(() => {
+      this.timer = setInterval(() => {
         this.setState({ 'time': time });
         if (--time < 0) {
-          clearInterval(timer);
+          clearInterval(this.timer);
           this.props.trigger();
         }
       }, 1000);
@@ -23,6 +23,10 @@ class Timer extends Component {
   // this function should trigger when timer component is mounted on page
   componentDidMount() {
     this.startTimer(this.state.time);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   render() {
