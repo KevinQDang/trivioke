@@ -14,6 +14,9 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      handleClickUsed: false,
+      triviaRequestUsed: false,
+      changeCatUsed: false,
       // traps must update state!
       time: 60,
       reverse: false,
@@ -38,8 +41,13 @@ class Game extends React.Component {
     this.startTimer = this.startTimer.bind(this);
   }
 
-
-  triviaRequest() {
+  triviaRequest(used) {
+    console.log(used, 'in triviaRequest');
+    if (used) {
+      this.setState({
+        triviaRequestUsed: true,
+      });
+    }
     const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
     fetch(url)
       .then(res => res.json())
@@ -93,14 +101,20 @@ class Game extends React.Component {
       .catch((err) => { console.error(err); });
   }
 
-  changeCat() {
+  changeCat(used) {
+    console.log(used, 'in changeCat');
+    if (used) {
+      this.setState({
+        changeCatUsed: true,
+      });
+    }
     const cats = [9, 11, 14, 15, 17, 22, 23, 26, 27];
     const rand = cats[Math.floor(Math.random() * cats.length)];
     const url = `https://opentdb.com/api.php?amount=1&category=${rand}&difficulty=${sessionStorage.diff}&type=multiple`;
     fetch(url)
       .then(res => res.json())
       .then((data) => {
-        this.setState({ question: data.results[0] });
+        this.setState({ question: data.results[rand] });
         sessionStorage.setItem('category', rand);
       })
       .catch((err) => { console.error(err); });
@@ -156,7 +170,13 @@ class Game extends React.Component {
     this.triviaRequest();
   }
 
-  handleClick() {
+  handleClick(used) {
+    console.log(used, 'in the parent handleClick');
+    if (used) {
+      this.setState({
+        handleClick: true,
+      });
+    }
     const { visibility } = this.state;
     this.setState({ visibility: !visibility });
   }
@@ -191,21 +211,56 @@ class Game extends React.Component {
       question, currTeam, team1, team2, team3, video, answers, time,
     } = this.state;
     const { name1, name2, name3 } = this.props;
+    const player1 = currTeam === 'team1' ? {} : { display: 'none' };
+    const player2 = currTeam === 'team2' ? {} : { display: 'none' };
+    const player3 = currTeam === 'team3' ? {} : { display: 'none' };
     if (!video) {
       return (
         <center>
           <div>
-            <Lifelines
-              handleChange={this.handleChange}
-              triviaRequest={this.triviaRequest}
-              handleClick={this.handleClick}
-              changeCat={this.changeCat}
-            />
-            <Traps
-              halfTime={this.halfTime}
-              reverseAnswers={this.reverseAnswers}
-              changeDifficulty={this.changeDifficulty}
-            />
+            <div style={player1} onChange={this.nextTeam}>
+              <Lifelines
+                handleChange={this.handleChange}
+                triviaRequest={this.triviaRequest}
+                handleClick={this.handleClick}
+                changeCat={this.changeCat}
+              />
+              <Traps
+                halfTime={this.halfTime}
+                reverseAnswers={this.reverseAnswers}
+                changeDifficulty={this.changeDifficulty}
+              />
+              {'player1'}
+            </div>
+            <div style={player2} onChange={this.nextTeam}>
+              <Lifelines
+                handleChange={this.handleChange}
+                triviaRequest={this.triviaRequest}
+                handleClick={this.handleClick}
+                changeCat={this.changeCat}
+              />
+              <Traps
+                halfTime={this.halfTime}
+                reverseAnswers={this.reverseAnswers}
+                changeDifficulty={this.changeDifficulty}
+              />
+              {'player2'}
+            </div>
+            <div style={player3} onChange={this.nextTeam}>
+              <Lifelines
+                handleChange={this.handleChange}
+                triviaRequest={this.triviaRequest}
+                handleClick={this.handleClick}
+                changeCat={this.changeCat}
+              />
+              <Traps
+                halfTime={this.halfTime}
+                reverseAnswers={this.reverseAnswers}
+                changeDifficulty={this.changeDifficulty}
+              />
+              {'player3'}
+            </div>
+            
             <Timer
               startTimer={this.startTimer}
               timer={this.timer}
@@ -236,7 +291,7 @@ class Game extends React.Component {
       );
     }
     return (
-      <VideoPlayer />
+      <VideoPlayer loser={currTeam} />
     );
   }
 }
