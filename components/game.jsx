@@ -155,6 +155,7 @@ class Game extends React.Component {
             <Trivia
             // order of answers in state of game component
             // logic of trivia component in game
+            // OR add timer to trivia component!
               triviaRequest={this.triviaRequest}
               handleChange={this.handleChange}
               question={question}
