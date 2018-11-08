@@ -44,13 +44,30 @@ const createUser = (obj, cb) => {
     }
   });
 };
+const videosSchema = mongoose.Schema({
+    
+  _id: {
+    kind: String,
+    videoId: String,
+  },
+  snippet: {
+    title: String,
+    description: String,
+    thumbnails: {
+      default: {
+        url: String,
+      },
+    },
+  },
+});
+const Video = mongoose.model('Video', videosSchema);
 const getAllSongs = (cb) => {
-  db.collection('videos').find().toArray((err, data) => {
+  Video.find((err, res) => {
     if (err) {
       console.log(err);
+      return cb(err, null);
     }
-    console.log(data);
-    return cb(data);
+    return cb(null, [res]);
   });
 };
 
