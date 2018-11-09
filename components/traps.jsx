@@ -12,6 +12,9 @@ class Traps extends React.Component {
       hideTrap1: false,
       hideTrap2: false,
     };
+    this.toggle = this.toggle.bind(this);
+    this.toggle1 = this.toggle1.bind(this);
+    this.toggle2 = this.toggle2.bind(this);
   }
 
   toggle() {

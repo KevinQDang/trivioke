@@ -30,7 +30,6 @@ class Login extends React.Component {
   handleSubmit() {
     this.socket.emit('login', 'A user logged in');
     this.socket.emit('room', this.room);
-    console.log('submit')
     const loginInfo = this.state;
     axios({ method: 'get', url: 'http://localhost:8080', params: loginInfo })
       .then(() => {

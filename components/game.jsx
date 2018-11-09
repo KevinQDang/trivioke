@@ -49,8 +49,10 @@ class Game extends React.Component {
     const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
     fetch(url)
       .then(res => res.json())
-      .then(data => this.setState({ question: data.results[0] }))
+      .then((data) => { console.log(data);
+        this.setState({ question: data.results[0] }); })
       .catch((err) => { console.error(err); });
+    
   }
 
   changeCat(used) {
@@ -156,6 +158,9 @@ class Game extends React.Component {
     const player1 = currTeam === 'team1' ? {} : { display: 'none' };
     const player2 = currTeam === 'team2' ? {} : { display: 'none' };
     const player3 = currTeam === 'team3' ? {} : { display: 'none' };
+    const player1Trap = currTeam !== 'team1' ? {} : { display: 'none' };
+    const player2Trap = currTeam !== 'team2' ? {} : { display: 'none' };
+    const player3Trap = currTeam !== 'team3' ? {} : { display: 'none' };
     if (!video) {
       return (
         <center>
@@ -167,11 +172,13 @@ class Game extends React.Component {
                 handleClick={this.handleClick}
                 changeCat={this.changeCat}
               />
-              <Traps
-                halfTime={this.halfTime}
-                reverseAnswers={this.reverseAnswers}
-                changeDifficulty={this.changeDifficulty}
-              />
+              <div style={player1Trap} onChange={this.nextTeam}>
+                <Traps
+                  halfTime={this.halfTime}
+                  reverseAnswers={this.reverseAnswers}
+                  changeDifficulty={this.changeDifficulty}
+                />
+              </div>
               {'player1'}
             </div>
             <div style={player2} onChange={this.nextTeam}>
@@ -181,11 +188,13 @@ class Game extends React.Component {
                 handleClick={this.handleClick}
                 changeCat={this.changeCat}
               />
-              <Traps
-                halfTime={this.halfTime}
-                reverseAnswers={this.reverseAnswers}
-                changeDifficulty={this.changeDifficulty}
-              />
+              <div style={player2Trap} onChange={this.nextTeam}>
+                <Traps
+                  halfTime={this.halfTime}
+                  reverseAnswers={this.reverseAnswers}
+                  changeDifficulty={this.changeDifficulty}
+                />
+              </div>
               {'player2'}
             </div>
             <div style={player3} onChange={this.nextTeam}>
@@ -195,11 +204,13 @@ class Game extends React.Component {
                 handleClick={this.handleClick}
                 changeCat={this.changeCat}
               />
-              <Traps
-                halfTime={this.halfTime}
-                reverseAnswers={this.reverseAnswers}
-                changeDifficulty={this.changeDifficulty}
-              />
+              <div style={player3Trap} onChange={this.nextTeam}>
+                <Traps
+                  halfTime={this.halfTime}
+                  reverseAnswers={this.reverseAnswers}
+                  changeDifficulty={this.changeDifficulty}
+                />
+              </div>
               {'player3'}
             </div>
             
