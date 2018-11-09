@@ -9,11 +9,13 @@ import Timer from './timer.jsx';
 import Traps from './traps.jsx';
 import Scoreboard from './scoreBoard.jsx';
 import VideoPlayer from './player.jsx';
+import GameOver from './gameOver.jsx';
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      winner: 'YOU',
       handleClickUsed: false,
       triviaRequestUsed: false,
       changeCatUsed: false,
@@ -187,16 +189,26 @@ class Game extends React.Component {
     const { currTeam } = this.state;
     if (currTeam === 'team1') {
       sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
+      if (Number(sessionStorage.score1) === 10) {
+        // if score is 10, player wins!!!
+
+      }
       this.setState(() => ({
         visibility: true,
       }));
     } else if (currTeam === 'team2') {
       sessionStorage.setItem('score2', (Number(sessionStorage.score2) + 1));
+      if (Number(sessionStorage.score2) === 10) {
+        // if score is 10, player wins!!!
+      }
       this.setState(() => ({
         visibility: true,
       }));
     } else {
       sessionStorage.setItem('score3', (Number(sessionStorage.score3) + 1));
+      if (Number(sessionStorage.score3) === 10) {
+        // if score is 10, player wins!!!
+      }
       this.setState(() => ({
         visibility: true,
       }));
@@ -301,7 +313,7 @@ class Game extends React.Component {
   render() {
     // conditional render for only player whos current turn can see answers!
     const {
-      question, currTeam, team1, team2, team3, video, answers, time,
+      question, currTeam, team1, team2, team3, video, answers, time, winner,
     } = this.state;
     const {
       name1, name2, name3,
@@ -309,6 +321,11 @@ class Game extends React.Component {
     const player1 = currTeam === 'team1' ? {} : { display: 'none' };
     const player2 = currTeam === 'team2' ? {} : { display: 'none' };
     const player3 = currTeam === 'team3' ? {} : { display: 'none' };
+    if (winner) {
+      return (
+        <GameOver winner={winner} />
+      );
+    }
     if (!video) {
       return (
         <center>

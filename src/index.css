@@ -676,3 +676,6 @@ caption {
   =============== */
 /* Layout
   =============== */
+  #gameOver {
+    text-align: center;
+  }
