@@ -114,8 +114,53 @@ class Game extends React.Component {
     fetch(url)
       .then(res => res.json())
       .then((data) => {
-        this.setState({ question: data.results[rand] });
         sessionStorage.setItem('category', rand);
+
+        this.setState({ question: data.results[0] });
+        const shuffle = (answerArr) => {
+          for (let i = answerArr.length - 1; i > 0; i -= 1) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [answerArr[i], answerArr[j]] = [answerArr[j], answerArr[i]];
+          }
+          return answerArr;
+        };
+        const reverseStr = (str) => {
+          let reversed = '';
+          for (let i = str.length - 1; i >= 0; i--) {
+            reversed += str[i];
+          }
+          return reversed;
+        };
+        function escapeHtml(text) {
+          return text
+            .replace(/&amp;/g, '&')
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&quot;/g, '"')
+            .replace(/&ldquo;/g, '"')
+            .replace(/&rdquo;/g, '"')
+            .replace(/&#039;/g, "'")
+            .replace(/&lsquo;/g, "'")
+            .replace(/&rsquo;/g, "'");
+        }
+        let answerArr;
+        if (this.reverse) {
+          answerArr = [
+            <button key="c" type="button" onClick={() => { this.triviaRequest(); this.nextTeam(); this.increaseScore(); }}>{escapeHtml(reverseStr(data.results[0].correct_answer))}</button>,
+            <button key="i1" onClick={this.triggerVideo} style={{ display: !this.visibility ? 'block' : 'none' }} type="button">{escapeHtml(reverseStr(data.results[0].incorrect_answers[0]))}</button>,
+            <button key="i2" onClick={this.triggerVideo} style={{ display: !this.visibility ? 'block' : 'none' }} type="button">{escapeHtml(reverseStr(data.results[0].incorrect_answers[1]))}</button>,
+            <button key="i3" onClick={this.triggerVideo} type="button">{escapeHtml(reverseStr(data.results[0].incorrect_answers[2]))}</button>,
+          ];
+        } else {
+          answerArr = [
+            <button key="c" type="button" onClick={() => { this.triviaRequest(); this.nextTeam(); this.increaseScore(); }}>{escapeHtml(data.results[0].correct_answer)}</button>,
+            <button key="i1" onClick={this.triggerVideo} style={{ display: !this.visibility ? 'block' : 'none' }} type="button">{escapeHtml(data.results[0].incorrect_answers[0])}</button>,
+            <button key="i2" onClick={this.triggerVideo} style={{ display: !this.visibility ? 'block' : 'none' }} type="button">{escapeHtml(data.results[0].incorrect_answers[1])}</button>,
+            <button key="i3" onClick={this.triggerVideo} type="button">{escapeHtml(data.results[0].incorrect_answers[2])}</button>,
+          ];
+        }
+        const shuffled = shuffle(answerArr);
+        this.setState({ answers: shuffled });
       })
       .catch((err) => { console.error(err); });
   }
@@ -183,7 +228,7 @@ class Game extends React.Component {
 
   halfTime() {
     const { time } = this.state;
-    const newTime = time / 2;
+    const newTime = Math.floor(time / 2);
     this.setState({ time: newTime });
 
     console.log(time, newTime, this.state.time);
@@ -199,8 +244,53 @@ class Game extends React.Component {
     fetch(url)
       .then(res => res.json())
       .then((data) => {
-        this.setState({ question: data.results[0] });
         sessionStorage.setItem('diff', 'hard');
+
+        this.setState({ question: data.results[0] });
+        const shuffle = (answerArr) => {
+          for (let i = answerArr.length - 1; i > 0; i -= 1) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [answerArr[i], answerArr[j]] = [answerArr[j], answerArr[i]];
+          }
+          return answerArr;
+        };
+        const reverseStr = (str) => {
+          let reversed = '';
+          for (let i = str.length - 1; i >= 0; i--) {
+            reversed += str[i];
+          }
+          return reversed;
+        };
+        function escapeHtml(text) {
+          return text
+            .replace(/&amp;/g, '&')
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&quot;/g, '"')
+            .replace(/&ldquo;/g, '"')
+            .replace(/&rdquo;/g, '"')
+            .replace(/&#039;/g, "'")
+            .replace(/&lsquo;/g, "'")
+            .replace(/&rsquo;/g, "'");
+        }
+        let answerArr;
+        if (this.reverse) {
+          answerArr = [
+            <button key="c" type="button" onClick={() => { this.triviaRequest(); this.nextTeam(); this.increaseScore(); }}>{escapeHtml(reverseStr(data.results[0].correct_answer))}</button>,
+            <button key="i1" onClick={this.triggerVideo} style={{ display: !this.visibility ? 'block' : 'none' }} type="button">{escapeHtml(reverseStr(data.results[0].incorrect_answers[0]))}</button>,
+            <button key="i2" onClick={this.triggerVideo} style={{ display: !this.visibility ? 'block' : 'none' }} type="button">{escapeHtml(reverseStr(data.results[0].incorrect_answers[1]))}</button>,
+            <button key="i3" onClick={this.triggerVideo} type="button">{escapeHtml(reverseStr(data.results[0].incorrect_answers[2]))}</button>,
+          ];
+        } else {
+          answerArr = [
+            <button key="c" type="button" onClick={() => { this.triviaRequest(); this.nextTeam(); this.increaseScore(); }}>{escapeHtml(data.results[0].correct_answer)}</button>,
+            <button key="i1" onClick={this.triggerVideo} style={{ display: !this.visibility ? 'block' : 'none' }} type="button">{escapeHtml(data.results[0].incorrect_answers[0])}</button>,
+            <button key="i2" onClick={this.triggerVideo} style={{ display: !this.visibility ? 'block' : 'none' }} type="button">{escapeHtml(data.results[0].incorrect_answers[1])}</button>,
+            <button key="i3" onClick={this.triggerVideo} type="button">{escapeHtml(data.results[0].incorrect_answers[2])}</button>,
+          ];
+        }
+        const shuffled = shuffle(answerArr);
+        this.setState({ answers: shuffled });
       })
       .catch((err) => { console.error(err); });
   }
@@ -260,7 +350,7 @@ class Game extends React.Component {
               />
               {'player3'}
             </div>
-            
+ 
             <Timer
               startTimer={this.startTimer}
               timer={this.timer}
