@@ -54,6 +54,9 @@ io.on('connection', (socket) => {
   socket.on('login', (user) => {
     console.log(user);
   });
+  socket.on('test', () => {
+    console.log('it worked');
+  });
 
   socket.on('room', (room) => {
     const clientsInRoom = io.nsps['/'].adapter.rooms[room];

@@ -7,19 +7,19 @@ import ReactDOM from 'react-dom';
 import Routing from '../components/routing.jsx';
 import './index.css';
 
+const socket = io('localhost:8080');
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-
+      socket,
     };
-    this.socket = io('localhost:8080');
   }
 
   render() {
     return (
-      <Routing assignRoom={this.assignRoom} />
+      <Routing socket={this.state.socket} />
     );
   }
 }

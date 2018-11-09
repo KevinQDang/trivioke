@@ -10,6 +10,7 @@ import Timer from './timer.jsx';
 import Scoreboard from './scoreBoard.jsx';
 import VideoPlayer from './player.jsx';
 
+
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -25,8 +26,10 @@ class Game extends React.Component {
     this.increaseScore = this.increaseScore.bind(this);
     this.triggerVideo = this.triggerVideo.bind(this);
     this.changeCat = this.changeCat.bind(this);
-    // this.toggle = this.toggle.bind(this);
   }
+
+  // this.props.socket.emit('test', 'finnaly');
+ 
 
   triviaRequest() {
     const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
@@ -74,6 +77,8 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
+    debugger;
+    console.log(this.contextType);
     this.triviaRequest();
   }
 
@@ -87,6 +92,7 @@ class Game extends React.Component {
   // }
 
   render() {
+console.log(this.props)
     const {
       question, visibility, currTeam, team1, team2, video,
     } = this.state;
@@ -101,6 +107,7 @@ class Game extends React.Component {
               triviaRequest={this.triviaRequest}
               handleClick={this.handleClick}
               changeCat={this.changeCat}
+              socket={this.props.socket}
             />
             <Timer
               trigger={this.triggerVideo}
@@ -114,6 +121,7 @@ class Game extends React.Component {
               nextTeam={this.nextTeam}
               increaseScore={this.increaseScore}
               trigger={this.triggerVideo}
+              socket={this.props.socket}
             />
             <Scoreboard
               currTeam={currTeam}

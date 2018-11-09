@@ -82,7 +82,8 @@ class Load extends Component {
     }
     return (
       <div>
-        <Game category={category} diff={diff} name1={team1} name2={team2} />
+        
+        <Game category={category} diff={diff} name1={team1} name2={team2} socket={this.props.socket} />
       </div>
     );
   }

@@ -1,25 +1,25 @@
 
 import React from 'react';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import io from 'socket.io-client';
 import SignUp from './signUp.jsx';
 import Login from './login.jsx';
 import VideoPlayer from './player.jsx';
 import Load from './load.jsx';
 import Game from './game.jsx';
 import Front from './front.jsx';
-import SocketContext from './socket-context.jsx';
+
 
 class Routing extends React.Component {
   constructor(props) {
     super(props);
-    this.stat = {
-
+    this.state = {
     };
   }
 
   render() {
+    console.log(this.props);
     return (
-      <SocketContext.Provider value={this.socket}>
       <Router>
         <div>
           <div>
@@ -31,15 +31,14 @@ class Routing extends React.Component {
               alt="logo"
             />
           </center>
-          <Route exact path="/" component={Front} />
+          <Route exact path="/" component={socket => <Front {...this.props} socket={this.props.socket} />} />
           <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/login" component={Login}  />
-          <Route exact path="/trivia" component={Load} />
+          <Route exact path="/login" component={socket => <Login {...this.props} socket={this.props.socket} />} />
+          <Route exact path="/trivia" component={socket => <Load {...this.props} socket={this.props.socket} />} />
           <Route exact path="/video" component={VideoPlayer} />
-          <Route exact path="/game" component={Game} />
+          <Route exact path="/game" component={socket => <Game {...this.props} socket={this.props.socket} />} />
         </div>
       </Router>
-      </SocketContext.Provider>
     );
   }
 }
