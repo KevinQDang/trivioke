@@ -174,6 +174,8 @@ class Game extends React.Component {
     } else {
       this.setState({ currTeam: 'team1' });
     }
+    this.triviaRequest();
+    this.setState({ time: 60 });
   }
 
   triggerVideo() {
