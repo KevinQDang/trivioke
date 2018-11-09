@@ -39,6 +39,12 @@ class VideoPlayer extends React.Component {
     });
   }
 
+  goBack() {
+    const { nextTeam, triggerVideo } = this.props;
+    nextTeam();
+    triggerVideo();
+  }
+
   render() {
     const { video } = this.state;
     const { loser } = this.props;
@@ -56,12 +62,12 @@ class VideoPlayer extends React.Component {
           </button>
           <button
             type="button"
-            onClick={this.goBack}
+            onClick={() => { this.goBack(); }}
             style={{
               justifyContent: 'center', alignItems: 'center', height: '3vh',
             }}
           >
-            <Link to="/game">Back</Link>
+          Done
           </button>
           <br></br>
           <b>{loser + ' you got to sing for us'}</b>
