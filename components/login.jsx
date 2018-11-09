@@ -9,6 +9,7 @@ import { Redirect } from 'react-router';
 class Login extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       redirect: false,
       name: '',
@@ -16,8 +17,10 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.room = 'game';  
+    this.room = 'game';
+    
   }
+
 
   handleChange() {
     this.setState({
@@ -26,6 +29,7 @@ class Login extends React.Component {
   }
 
   handleSubmit() {
+    console.log(this.props);
     const loginInfo = this.state;
     axios({ method: 'get', url: 'http://localhost:8080', params: loginInfo })
       .then(() => {
