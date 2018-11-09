@@ -7,33 +7,23 @@ class Timer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: this.props.time,
-    };
-    this.startTimer = (time) => {
-      this.timer = setInterval(() => {
-        this.setState({ 'time': time });
-        if (--time < 0) {
-          clearInterval(this.timer);
-          this.props.trigger();
-        }
-      }, 1000);
     };
   }
 
   // this function should trigger when timer component is mounted on page
   componentDidMount() {
-    this.startTimer(this.state.time);
+    this.props.startTimer();
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer);
+    clearInterval(this.props.timer);
   }
 
   render() {
     return (
       <div>
         <h3>Time Left</h3>
-        <span>{this.state.time} seconds!</span>
+        <span>{this.props.time} seconds!</span>
       </div>
     );
   }
