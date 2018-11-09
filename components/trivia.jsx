@@ -2,7 +2,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-param-reassign */
 import React, { Component } from 'react';
+import io from 'socket.io-client';
 
+var socket = io.connect()
 // wait for 3 players
 
 class Trivia extends Component {
@@ -10,6 +12,8 @@ class Trivia extends Component {
     super(props);
     this.state = {
     };
+    
+    console.log(props);
   }
 
   render() {
@@ -29,6 +33,7 @@ class Trivia extends Component {
         .replace(/&rsquo;/g, "'");
     }
     function shuffle(answerArr) {
+      
       for (let i = answerArr.length - 1; i > 0; i -= 1) {
         const j = Math.floor(Math.random() * (i + 1));
         [answerArr[i], answerArr[j]] = [answerArr[j], answerArr[i]];

@@ -7,12 +7,11 @@ import VideoPlayer from './player.jsx';
 import Load from './load.jsx';
 import Game from './game.jsx';
 import Front from './front.jsx';
-
+import SocketContext from './socket-context.jsx';
 
 class Routing extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.stat = {
 
     };
@@ -20,6 +19,7 @@ class Routing extends React.Component {
 
   render() {
     return (
+      <SocketContext.Provider value={this.socket}>
       <Router>
         <div>
           <div>
@@ -33,17 +33,13 @@ class Routing extends React.Component {
           </center>
           <Route exact path="/" component={Front} />
           <Route exact path="/signup" component={SignUp} />
-          {/* <Route path="/login" render={() => <Login assingRoom={assignRoom} />} /> */}
-          <Route
-            path="/login"
-            render={this.props.assignRoom => <Login {...props} />}
-          />
-          {/* <Route exact path="/login" component={Login} assignRoom={this.assignRoom} /> */}
+          <Route exact path="/login" component={Login}  />
           <Route exact path="/trivia" component={Load} />
           <Route exact path="/video" component={VideoPlayer} />
           <Route exact path="/game" component={Game} />
         </div>
       </Router>
+      </SocketContext.Provider>
     );
   }
 }
