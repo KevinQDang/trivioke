@@ -61,7 +61,7 @@ const checkPassword = (req, res) => {
         } else {
           res.sendStatus(404);
         }
-      })
+      });
     }
   });
 };

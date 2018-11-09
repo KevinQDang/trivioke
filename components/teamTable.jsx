@@ -4,6 +4,9 @@ import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
 class Table extends Component {
+  // change this component to user add name and
+  // conditional templates for if someone in room
+  // first person to join can add category, other players only join
   render() {
     const { handleChange } = this.props;
     return (
@@ -29,6 +32,19 @@ class Table extends Component {
             <FormControl
               type="text"
               name="team2"
+              placeholder="Enter text"
+              onChange={handleChange}
+            />
+          </FormGroup>
+        </form>
+        <form>
+          <FormGroup
+            controlId="formBasicText"
+          >
+            <ControlLabel>Team 3 Name</ControlLabel>
+            <FormControl
+              type="text"
+              name="team3"
               placeholder="Enter text"
               onChange={handleChange}
             />

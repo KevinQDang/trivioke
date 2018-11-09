@@ -18,7 +18,6 @@ class VideoPlayer extends React.Component {
   }
 
   componentDidMount() {
-    const { videos } = this.state;
     const rand = Math.floor(Math.random() * 10);
     axios({ method: 'GET', url: '/songs', headers: { 'Access-Control-Allow-Origin': '*' } })
       .then((res) => {
@@ -34,14 +33,21 @@ class VideoPlayer extends React.Component {
 
   changeVideo() {
     const { videos } = this.state;
-    const rand = Math.floor(Math.random() * 10);
+    const rand = Math.floor(Math.random() * (videos.length - 1)) + 1;
     this.setState({
       video: videos[rand],
     });
   }
 
+  goBack() {
+    const { nextTeam, triggerVideo } = this.props;
+    nextTeam();
+    triggerVideo();
+  }
+
   render() {
     const { video } = this.state;
+    const { loser } = this.props;
     return (
       <center>
         <div>
@@ -56,13 +62,15 @@ class VideoPlayer extends React.Component {
           </button>
           <button
             type="button"
-            onClick={this.goBack}
+            onClick={() => { this.goBack(); }}
             style={{
               justifyContent: 'center', alignItems: 'center', height: '3vh',
             }}
           >
-            <Link to="/game">Back</Link>
+          Done
           </button>
+          <br></br>
+          <b>{loser + ' you got to sing for us'}</b>
           <Iframe
             fluid="true"
             className="embed-responsive-item"
