@@ -179,6 +179,7 @@ class Game extends React.Component {
 
   triggerVideo() {
     this.setState(prevState => ({ video: !prevState.video }));
+    this.setState({ time: 60 });
   }
 
   increaseScore() {
@@ -301,7 +302,9 @@ class Game extends React.Component {
     const {
       question, currTeam, team1, team2, team3, video, answers, time,
     } = this.state;
-    const { name1, name2, name3 } = this.props;
+    const {
+      name1, name2, name3,
+    } = this.props;
     const player1 = currTeam === 'team1' ? {} : { display: 'none' };
     const player2 = currTeam === 'team2' ? {} : { display: 'none' };
     const player3 = currTeam === 'team3' ? {} : { display: 'none' };
@@ -391,7 +394,11 @@ class Game extends React.Component {
       );
     }
     return (
-      <VideoPlayer loser={currTeam} />
+      <VideoPlayer
+        loser={currTeam}
+        nextTeam={this.nextTeam}
+        triggerVideo={this.triggerVideo}
+      />
     );
   }
 }
