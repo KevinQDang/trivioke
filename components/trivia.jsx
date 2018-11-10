@@ -9,7 +9,7 @@ class Trivia extends Component {
     super(props);
     this.state = {
     };   
-    console.log(props);
+ 
   }
 
   render() {

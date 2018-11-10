@@ -1,6 +1,5 @@
 
 import React from 'react';
-import io from 'socket.io-client';
 import SignUp from './signUp.jsx';
 import Login from './login.jsx';
 
@@ -11,7 +10,6 @@ class Front extends React.Component {
     this.state = {
 
     };
-    this.socket = io('localhost:8080');
   }
 
   render() {
