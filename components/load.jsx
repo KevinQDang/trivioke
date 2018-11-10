@@ -23,6 +23,7 @@ class Load extends Component {
       team2: '',
       team3: '',
     };
+    console.log(props)
     this.begin = this.begin.bind(this);
     this.handeleClick = this.handeleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -92,7 +93,8 @@ class Load extends Component {
     }
     return (
       <div>
-        <Game category={category} diff={diff} name1={team1} name2={team2} name3={team3} />
+        
+        <Game category={category} diff={diff} name1={team1} name2={team2} socket={this.props.socket} />
       </div>
     );
   }
