@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-
+import io from 'socket.io-client';
 import Routing from '../components/routing.jsx';
 import './index.css';
 
