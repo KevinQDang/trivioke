@@ -37,14 +37,6 @@ class Game extends React.Component {
     this.increaseScore = this.increaseScore.bind(this);
     this.triggerVideo = this.triggerVideo.bind(this);
     this.changeCat = this.changeCat.bind(this);
-<<<<<<< HEAD
-  }
-
-  // this.props.socket.emit('test', 'finnaly');
- 
-
-  triviaRequest() {
-=======
     this.halfTime = this.halfTime.bind(this);
     this.changeDifficulty = this.changeDifficulty.bind(this);
     this.reverseAnswers = this.reverseAnswers.bind(this);
@@ -58,7 +50,6 @@ class Game extends React.Component {
         triviaRequestUsed: true,
       });
     }
->>>>>>> 3aa63983093d6e4429c1ac9c1220aab998de8deb
     const url = `https://opentdb.com/api.php?amount=1&category=${sessionStorage.category}&difficulty=${sessionStorage.diff}&type=multiple`;
     fetch(url)
       .then(res => res.json())
@@ -178,9 +169,6 @@ class Game extends React.Component {
 
   nextTeam() {
     const { currTeam } = this.state;
-<<<<<<< HEAD
-    return currTeam === 'Team 1' ? this.setState({ currTeam: 'Team 2' }) : this.setState({ currTeam: ' team 1' });
-=======
     if (currTeam === 'team1') {
       this.setState({ currTeam: 'team2' });
     } else if (currTeam === 'team2') {
@@ -188,7 +176,6 @@ class Game extends React.Component {
     } else {
       this.setState({ currTeam: 'team1' });
     }
->>>>>>> 3aa63983093d6e4429c1ac9c1220aab998de8deb
   }
 
   triggerVideo() {
@@ -334,8 +321,10 @@ console.log(this.props)
                 triviaRequest={this.triviaRequest}
                 handleClick={this.handleClick}
                 changeCat={this.changeCat}
+                socket={this.props.socket}
               />
               <Traps
+                socket={this.props.socket}
                 halfTime={this.halfTime}
                 reverseAnswers={this.reverseAnswers}
                 changeDifficulty={this.changeDifficulty}
