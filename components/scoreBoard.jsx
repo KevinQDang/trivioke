@@ -33,6 +33,10 @@ class Scoreboard extends React.Component {
               <td>{sessionStorage.team2}</td>
               <td>{sessionStorage.score2}</td>
             </tr>
+            <tr id="team3" style={{ background: currTeam === 'team3' ? 'lightgreen' : 'transparent' }}>
+              <td>{sessionStorage.team3}</td>
+              <td>{sessionStorage.score3}</td>
+            </tr>
           </tbody>
         </table>
       </div>

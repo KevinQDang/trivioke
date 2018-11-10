@@ -5,11 +5,12 @@
 import React from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router';
-import io from 'socket.io-client';
+
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       redirect: false,
       name: '',
@@ -18,8 +19,9 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.room = 'game';
-    this.socket = io('localhost:8080');
+    console.log(this.props);
   }
+
 
   handleChange() {
     this.setState({
@@ -28,9 +30,8 @@ class Login extends React.Component {
   }
 
   handleSubmit() {
-    this.socket.emit('login', 'A user logged in');
-    this.socket.emit('room', this.room);
-    console.log('submit')
+     this.props.socket.emit('login', 'A user logged in');
+     this.props.socket.emit('room', this.room);
     const loginInfo = this.state;
     axios({ method: 'get', url: 'http://localhost:8080', params: loginInfo })
       .then(() => {
