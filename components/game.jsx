@@ -3,12 +3,14 @@
 /* eslint-disable import/extensions */
 /* eslint-disable react/sort-comp */
 import React from 'react';
+
 import Lifelines from './lifelines.jsx';
 import Trivia from './trivia.jsx';
 import Timer from './timer.jsx';
 import Traps from './traps.jsx';
 import Scoreboard from './scoreBoard.jsx';
 import VideoPlayer from './player.jsx';
+
 
 class Game extends React.Component {
   constructor(props) {
@@ -184,7 +186,7 @@ class Game extends React.Component {
 
   increaseScore() {
     const { currTeam } = this.state;
-    if (currTeam === 'team1') {
+    if (currTeam === 'Team 1') {
       sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
       this.setState(() => ({
         visibility: true,
@@ -214,6 +216,8 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
+    debugger;
+    console.log(this.contextType);
     this.triviaRequest();
   }
 
@@ -298,7 +302,7 @@ class Game extends React.Component {
   }
 
   render() {
-    // conditional render for only player whos current turn can see answers!
+console.log(this.props)
     const {
       question, currTeam, team1, team2, team3, video, answers, time,
     } = this.state;
@@ -315,12 +319,14 @@ class Game extends React.Component {
       return (
         <center>
           <div>
+            <button onClick={() => { console.log(this.props.socket); }}>hello</button>
             <div style={player1} onChange={this.nextTeam}>
               <Lifelines
                 handleChange={this.handleChange}
                 triviaRequest={this.triviaRequest}
                 handleClick={this.handleClick}
                 changeCat={this.changeCat}
+                socket={this.props.socket}
               />
               <div style={player1Trap} onChange={this.nextTeam}>
                 <Traps
@@ -379,6 +385,7 @@ class Game extends React.Component {
               nextTeam={this.nextTeam}
               increaseScore={this.increaseScore}
               trigger={this.triggerVideo}
+              socket={this.props.socket}
             />
             <Scoreboard
               currTeam={currTeam}
