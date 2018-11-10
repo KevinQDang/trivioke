@@ -229,7 +229,6 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    debugger;
     console.log(this.contextType);
     this.triviaRequest();
   }
