@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import {
+  FormGroup, ControlLabel, FormControl, Grid, Row, Col,
+} from 'react-bootstrap';
 
 class Table extends Component {
   render() {
@@ -64,8 +66,14 @@ class Table extends Component {
     }
     // room full or player not in room
     return (
-      <div>
-        <h3>Game Room full! Try again later...</h3>
+      <div id="roomFull">
+        <Grid className="fluid" align="center">
+          <Row center="xs">
+            <Col>
+              <h3>Game Room full! Try again later...</h3>
+            </Col>
+          </Row>
+        </Grid>
       </div>
     );
   }
