@@ -41,11 +41,12 @@ app.post('/signup', (req, res) => {
 app.get('/login', (req, res) => {
   util.checkPassword(req, res);
 });
-
+const users = [];
 io.on('connection', (socket) => {
   console.log(socket.id, socket.name);
   socket.on('login', (user) => {
     console.log(user);
+
   });
 
   socket.on('room', (room) => {
@@ -60,6 +61,7 @@ io.on('connection', (socket) => {
       console.log('user joined', room);
       socket.id = socket.adapter.rooms[room].length;
       console.log('this socket is player', socket.id);
+      io.sockets.emit('player', socket.id);
     }
   });
 });

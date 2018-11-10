@@ -676,3 +676,14 @@ caption {
   =============== */
 /* Layout
   =============== */
+  #gameOver {
+    text-align: center;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0 0 200px;
+  }
+

@@ -10,12 +10,14 @@ import Timer from './timer.jsx';
 import Traps from './traps.jsx';
 import Scoreboard from './scoreBoard.jsx';
 import VideoPlayer from './player.jsx';
+import GameOver from './gameOver.jsx';
 
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      winner: null,
       handleClickUsed: false,
       triviaRequestUsed: false,
       changeCatUsed: false,
@@ -44,7 +46,7 @@ class Game extends React.Component {
   }
 
   triviaRequest(used) {
-    console.log(used, 'in triviaRequest');
+    
     if (used) {
       this.setState({
         triviaRequestUsed: true,
@@ -101,11 +103,10 @@ class Game extends React.Component {
         this.setState({ answers: shuffled });
       })
       .catch((err) => { console.error(err); });
-    
   }
 
   changeCat(used) {
-    console.log(used, 'in changeCat');
+
     if (used) {
       this.setState({
         changeCatUsed: true,
@@ -170,6 +171,10 @@ class Game extends React.Component {
 
   nextTeam() {
     const { currTeam } = this.state;
+    const { socket } = this.props;
+    console.log(socket);
+    socket.emit('player', id);
+    console.log(id);
     if (currTeam === 'team1') {
       this.setState({ currTeam: 'team2' });
     } else if (currTeam === 'team2') {
@@ -177,6 +182,8 @@ class Game extends React.Component {
     } else {
       this.setState({ currTeam: 'team1' });
     }
+    this.triviaRequest();
+    this.setState({ time: 60 });
   }
 
   triggerVideo() {
@@ -188,16 +195,26 @@ class Game extends React.Component {
     const { currTeam } = this.state;
     if (currTeam === 'Team 1') {
       sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
+      if (Number(sessionStorage.score1) === 10) {
+        // if score is 10, player wins!!!
+
+      }
       this.setState(() => ({
         visibility: true,
       }));
     } else if (currTeam === 'team2') {
       sessionStorage.setItem('score2', (Number(sessionStorage.score2) + 1));
+      if (Number(sessionStorage.score2) === 10) {
+        // if score is 10, player wins!!!
+      }
       this.setState(() => ({
         visibility: true,
       }));
     } else {
       sessionStorage.setItem('score3', (Number(sessionStorage.score3) + 1));
+      if (Number(sessionStorage.score3) === 10) {
+        // if score is 10, player wins!!!
+      }
       this.setState(() => ({
         visibility: true,
       }));
@@ -216,8 +233,7 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    debugger;
-    console.log(this.contextType);
+    
     this.triviaRequest();
   }
 
@@ -302,9 +318,8 @@ class Game extends React.Component {
   }
 
   render() {
-console.log(this.props)
     const {
-      question, currTeam, team1, team2, team3, video, answers, time,
+      question, currTeam, team1, team2, team3, video, answers, time, winner,
     } = this.state;
     const {
       name1, name2, name3,
@@ -312,9 +327,11 @@ console.log(this.props)
     const player1 = currTeam === 'team1' ? {} : { display: 'none' };
     const player2 = currTeam === 'team2' ? {} : { display: 'none' };
     const player3 = currTeam === 'team3' ? {} : { display: 'none' };
-    const player1Trap = currTeam !== 'team1' ? {} : { display: 'none' };
-    const player2Trap = currTeam !== 'team2' ? {} : { display: 'none' };
-    const player3Trap = currTeam !== 'team3' ? {} : { display: 'none' };
+    if (winner) {
+      return (
+        <GameOver winner={winner} />
+      );
+    }
     if (!video) {
       return (
         <center>
@@ -328,13 +345,13 @@ console.log(this.props)
                 changeCat={this.changeCat}
                 socket={this.props.socket}
               />
-              <div style={player1Trap} onChange={this.nextTeam}>
-                <Traps
+              <Traps
                   halfTime={this.halfTime}
                   reverseAnswers={this.reverseAnswers}
                   changeDifficulty={this.changeDifficulty}
                 />
-              </div>
+
+
               {'player1'}
             </div>
             <div style={player2} onChange={this.nextTeam}>
@@ -344,13 +361,13 @@ console.log(this.props)
                 handleClick={this.handleClick}
                 changeCat={this.changeCat}
               />
-              <div style={player2Trap} onChange={this.nextTeam}>
-                <Traps
+
+              <Traps
                   halfTime={this.halfTime}
                   reverseAnswers={this.reverseAnswers}
                   changeDifficulty={this.changeDifficulty}
                 />
-              </div>
+
               {'player2'}
             </div>
             <div style={player3} onChange={this.nextTeam}>
@@ -360,16 +377,16 @@ console.log(this.props)
                 handleClick={this.handleClick}
                 changeCat={this.changeCat}
               />
-              <div style={player3Trap} onChange={this.nextTeam}>
+              
                 <Traps
                   halfTime={this.halfTime}
                   reverseAnswers={this.reverseAnswers}
                   changeDifficulty={this.changeDifficulty}
                 />
-              </div>
+             
               {'player3'}
             </div>
- 
+
             <Timer
               startTimer={this.startTimer}
               timer={this.timer}
