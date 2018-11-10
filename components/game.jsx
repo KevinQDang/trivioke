@@ -15,7 +15,7 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      winner: 'YOU',
+      winner: null,
       handleClickUsed: false,
       triviaRequestUsed: false,
       changeCatUsed: false,

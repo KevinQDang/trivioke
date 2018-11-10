@@ -15,9 +15,9 @@ class GameOver extends React.Component {
   render() {
     const { winner } = this.props;
     return (
-      <div>
-        <Grid id="gameOver" className="fluid">
-          <Row>
+      <div id="gameOver">
+        <Grid className="fluid" align="center">
+          <Row center="xs">
             <Col>
               <h1> Game Over! </h1>
               <h2> {winner} Wins!</h2>
