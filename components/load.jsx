@@ -6,12 +6,17 @@ import io from 'socket.io-client';
 import Filters from './filters.jsx';
 import Team from './teamTable.jsx';
 import Game from './game.jsx';
-// add timer component
 
 class Load extends Component {
+  // change this component to user add name and
+  // conditional templates for if someone in room
+  // first person to join can add category, other players only join
+  // other players see selected category and difficulty
   constructor(props) {
     super(props);
     this.state = {
+      // current player to be gotten from socket id
+      currentPlayer: 1,
       diff: 'medium',
       category: 9,
       trivia: false,
@@ -26,7 +31,7 @@ class Load extends Component {
 
   begin() {
     const {
-      diff, category, team1, team2, team3,
+      diff, category, team1, team2, team3, currentPlayer,
     } = this.state;
     sessionStorage.setItem('diff', diff);
     sessionStorage.setItem('category', category);
@@ -36,10 +41,13 @@ class Load extends Component {
     sessionStorage.setItem('score1', 0);
     sessionStorage.setItem('score2', 0);
     sessionStorage.setItem('score3', 0);
+    // may not need to set this if reading from socket id in Game component
+    sessionStorage.setItem('currentPlayer', currentPlayer);
     this.setState({ trivia: true });
   }
 
   handeleClick() {
+    console.log('category selected');
     this.setState({
       [event.target.name]: event.target.id,
     });
@@ -54,14 +62,14 @@ class Load extends Component {
   render() {
     console.log(this.props.socket)  
     const {
-      category, diff, team1, team2, team3, trivia,
+      category, diff, team1, team2, team3, trivia, currentPlayer,
     } = this.state;
     if (!trivia) {
       return (
         <center>
           <div>
             <div key="team">
-              <Team handleChange={this.handleChange} />
+              <Team handleChange={this.handleChange} currentPlayer={currentPlayer} />
             </div>
             <Filters click={this.handeleClick} />
             <table style={{
@@ -86,7 +94,6 @@ class Load extends Component {
     }
     return (
       <div>
-
         <Game category={category} diff={diff} name1={team1} name2={team2} socket={this.props.socket} />
       </div>
     );
