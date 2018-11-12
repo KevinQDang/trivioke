@@ -169,12 +169,29 @@ class Game extends React.Component {
       .catch((err) => { console.error(err); });
   }
 
+  // nextTeam() {
+  //   const { currTeam } = this.state;
+  //   if (currTeam === '1') {
+  //     this.props.socket.emit('change', '2');
+  //     this.props.socket.on('turn', (team) => {
+  //       this.setState({ currTeam: team });
+  //     });
+  //   } else if (currTeam === '2') {
+  //     this.props.socket.emit('change', '3');
+  //     this.props.socket.on('turn', (team) => {
+  //       this.setState({ currTeam: team });
+  //     });
+  //   } else {
+  //     this.props.socket.emit('change', '1');
+  //     this.props.socket.on('turn', (team) => {
+  //       this.setState({ currTeam: team });
+  //     });
+  //   }
+  //   this.triviaRequest();
+  //   this.setState({ time: 60 });
+  // }
   nextTeam() {
     const { currTeam } = this.state;
-    const { socket } = this.props;
-    console.log(socket);
-    socket.emit('player', id);
-    console.log(id);
     if (currTeam === 'team1') {
       this.setState({ currTeam: 'team2' });
     } else if (currTeam === 'team2') {
@@ -193,7 +210,7 @@ class Game extends React.Component {
 
   increaseScore() {
     const { currTeam } = this.state;
-    if (currTeam === 'Team 1') {
+    if (currTeam === '1') {
       sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
       if (Number(sessionStorage.score1) === 10) {
         // if score is 10, player wins!!!
@@ -202,7 +219,7 @@ class Game extends React.Component {
       this.setState(() => ({
         visibility: true,
       }));
-    } else if (currTeam === 'team2') {
+    } else if (currTeam === '2') {
       sessionStorage.setItem('score2', (Number(sessionStorage.score2) + 1));
       if (Number(sessionStorage.score2) === 10) {
         // if score is 10, player wins!!!
@@ -318,6 +335,7 @@ class Game extends React.Component {
   }
 
   render() {
+    
     const {
       question, currTeam, team1, team2, team3, video, answers, time, winner,
     } = this.state;
