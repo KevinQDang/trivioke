@@ -171,12 +171,21 @@ class Game extends React.Component {
 
   nextTeam() {
     const { currTeam } = this.state;
-    if (currTeam === 'team1') {
-      this.setState({ currTeam: 'team2' });
-    } else if (currTeam === 'team2') {
-      this.setState({ currTeam: 'team3' });
+    if (currTeam === '1') {
+      this.props.socket.emit('change', '2');
+      io.on('turn', (team) => {
+        this.setState({ currTeam: team });
+      });
+    } else if (currTeam === '2') {
+      this.props.socket.emit('change', '3');
+      io.on('turn', (team) => {
+        this.setState({ currTeam: team });
+      });
     } else {
-      this.setState({ currTeam: 'team1' });
+      this.props.socket.emit('change', '1');
+      io.on('turn', (team) => {
+        this.setState({ currTeam: team });
+      });
     }
     this.triviaRequest();
     this.setState({ time: 60 });
@@ -189,7 +198,7 @@ class Game extends React.Component {
 
   increaseScore() {
     const { currTeam } = this.state;
-    if (currTeam === 'Team 1') {
+    if (currTeam === '1') {
       sessionStorage.setItem('score1', (Number(sessionStorage.score1) + 1));
       if (Number(sessionStorage.score1) === 10) {
         // if score is 10, player wins!!!
@@ -198,7 +207,7 @@ class Game extends React.Component {
       this.setState(() => ({
         visibility: true,
       }));
-    } else if (currTeam === 'team2') {
+    } else if (currTeam === '2') {
       sessionStorage.setItem('score2', (Number(sessionStorage.score2) + 1));
       if (Number(sessionStorage.score2) === 10) {
         // if score is 10, player wins!!!
@@ -314,7 +323,7 @@ class Game extends React.Component {
   }
 
   render() {
-console.log(this.props)
+    console.log(this.props);
     const {
       question, currTeam, team1, team2, team3, video, answers, time, winner,
     } = this.state;
@@ -377,7 +386,7 @@ console.log(this.props)
               />
               {'player3'}
             </div>
- 
+
             <Timer
               startTimer={this.startTimer}
               timer={this.timer}

@@ -47,8 +47,10 @@ io.on('connection', (socket) => {
   socket.on('login', (user) => {
     console.log(user);
   });
-
-  socket.on('room', (room , callback) => {
+  io.on('change', (team) => {
+    io.emit('turn', team);
+  });
+  socket.on('room', (room, callback) => {
     const clientsInRoom = io.nsps['/'].adapter.rooms[room];
     const numClients = clientsInRoom === undefined ? 0 : Object.keys(clientsInRoom.sockets).length;
 
