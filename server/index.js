@@ -61,14 +61,10 @@ io.on('connection', (socket) => {
       console.log('user joined', room);
       socket.id = socket.adapter.rooms[room].length;
       console.log('this socket is player', socket.id);
-<<<<<<< HEAD
-      io.sockets.emit('player', socket.id);
-=======
       callback({
         room,
         id: socket.adapter.rooms[room].length,
       });
->>>>>>> 0ddc63fe613dc8834963ad1220951ca7a1d709cd
     }
   });
 });
