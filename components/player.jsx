@@ -81,6 +81,7 @@ class VideoPlayer extends React.Component {
             allowFullScreen
           />
         </div>
+        <iframe title="chat" src="https://tokbox.com/embed/embed/ot-embed.js?embedId=777840f4-d3c3-4d30-9116-c0853af4adbc&room=DEFAULT_ROOM&iframe=true" width="800" height="640" allow="microphone; camera" />
       </center>
     );
   }

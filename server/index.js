@@ -47,19 +47,25 @@ io.on('connection', (socket) => {
   socket.on('login', (user) => {
     console.log(user);
   });
-
-  socket.on('room', (room) => {
+  io.on('change', (team) => {
+    io.emit('turn', team);
+  });
+  socket.on('room', (room, callback) => {
     const clientsInRoom = io.nsps['/'].adapter.rooms[room];
     const numClients = clientsInRoom === undefined ? 0 : Object.keys(clientsInRoom.sockets).length;
 
     // max threey clients
     if (numClients > 3) {
-      socket.emit('full', room);
+      callback({ room: 'nope', id: 'nope' });
     } else {
       socket.join(room);
       console.log('user joined', room);
       socket.id = socket.adapter.rooms[room].length;
       console.log('this socket is player', socket.id);
+      callback({
+        room,
+        id: socket.adapter.rooms[room].length,
+      });
     }
   });
 });

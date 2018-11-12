@@ -9,7 +9,7 @@ class Trivia extends Component {
     super(props);
     this.state = {
     };   
-    console.log(props);
+ 
   }
 
   render() {
@@ -31,7 +31,6 @@ class Trivia extends Component {
     if (answers) {
       const multiChoice = [
         <div key="trivia">
-          {/* <iframe title="chat" src="https://tokbox.com/embed/embed/ot-embed.js?embedId=777840f4-d3c3-4d30-9116-c0853af4adbc&room=DEFAULT_ROOM&iframe=true" width="800" height="640" allow="microphone; camera" /> */}
           <div key="question"><h3>{escapeHtml(question.question)}</h3></div>
           <div key="answers">{answers.map((answer, i) => <div key={i}>{answer}</div>)}</div>
         </div>,
