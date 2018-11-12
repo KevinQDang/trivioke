@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-restricted-globals */
 import React, { Component } from 'react';
+import io from 'socket.io-client';
 import Filters from './filters.jsx';
 import Team from './teamTable.jsx';
 import Game from './game.jsx';
@@ -23,7 +24,6 @@ class Load extends Component {
       team2: '',
       team3: '',
     };
-    console.log(props)
     this.begin = this.begin.bind(this);
     this.handeleClick = this.handeleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -62,6 +62,7 @@ class Load extends Component {
   }
 
   render() {
+    console.log(this.props.socket)  
     const {
       category, diff, team1, team2, team3, trivia, currentPlayer,
     } = this.state;
@@ -95,7 +96,6 @@ class Load extends Component {
     }
     return (
       <div>
-        
         <Game category={category} diff={diff} name1={team1} name2={team2} socket={this.props.socket} />
       </div>
     );

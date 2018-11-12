@@ -49,19 +49,26 @@ io.on('connection', (socket) => {
 
   });
 
-  socket.on('room', (room) => {
+  socket.on('room', (room , callback) => {
     const clientsInRoom = io.nsps['/'].adapter.rooms[room];
     const numClients = clientsInRoom === undefined ? 0 : Object.keys(clientsInRoom.sockets).length;
 
     // max threey clients
     if (numClients > 3) {
-      socket.emit('full', room);
+      callback({ room: 'nope', id: 'nope' });
     } else {
       socket.join(room);
       console.log('user joined', room);
       socket.id = socket.adapter.rooms[room].length;
       console.log('this socket is player', socket.id);
+<<<<<<< HEAD
       io.sockets.emit('player', socket.id);
+=======
+      callback({
+        room,
+        id: socket.adapter.rooms[room].length,
+      });
+>>>>>>> 0ddc63fe613dc8834963ad1220951ca7a1d709cd
     }
   });
 });
